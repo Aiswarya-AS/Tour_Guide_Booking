@@ -35,7 +35,7 @@ const Destination = () => {
 					<div className="preview col-md-6">
 						
 						<div class="preview-pic tab-content">
-                            <div class="tab-pane active" id="pic-1"><img src={`http://127.0.0.1:8000/${desList.thumbnail}`} /></div>
+                            <div class="tab-pane active" id="pic-1"><img src={`https://res.cloudinary.com/dmysmwucj/${desList.thumbnail}`} /></div>
                     
 						</div>
 						{/* <ul class="preview-thumbnail nav nav-tabs">

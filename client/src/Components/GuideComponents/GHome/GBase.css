@@ -45,7 +45,7 @@
     width: 12.5rem;
     height: 12.5rem;
     overflow: hidden;
-    z-index: 10;
+    z-index: 0;
     margin-top: -8.75rem;
     padding: 0.1875rem;
     background: #fff;
@@ -213,4 +213,8 @@
     line-height: 1.625rem;
     margin-top: -0.8125rem;
     text-align: center;
+}
+.otp-input{
+   align-items: center;
+   display: flex;
 }

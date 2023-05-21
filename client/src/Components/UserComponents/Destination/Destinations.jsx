@@ -7,15 +7,37 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Destinations() {
     const location=useLocation()
+    console.log(location.state.data);
     const navigate=useNavigate()
     const [destination]=useState(location.state.data)
-   
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
+  
+    // Calculate the index range for the current page
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+  
+    // Get the items to display on the current page
+    const displayedDestinations = destination.slice(startIndex, endIndex);
+  
+    // Handle page change
+    const handlePageChange = (pageNumber) => {
+      setCurrentPage(pageNumber);
+    };
+    // Go to the previous page
+  const goToPreviousPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
 
+  // Go to the next page
+  const goToNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
   
   return (
     <Section id="recommend">
       <div className="title">
-        <h1>Destinations</h1>
+        <h1 className="text-center" style={{paddingLeft:'3rem'}}>DESTINATIONS</h1>
       </div>
       <div className="packages">
 
@@ -25,7 +47,7 @@ export default function Destinations() {
           return (
             <a style={{textDecoration:'none',color:'black'}} onClick={()=>navigate(`/destination/${destination.id}`)}>
             <div className="destination" key={index}>
-              <img src={`http://127.0.0.1:8000/${destination.thumbnail}`} alt="" />
+              <img src={`https://res.cloudinary.com/dmysmwucj/${destination.thumbnail}`} alt="" />
               <h3>{destination.country},{destination.state}</h3>
               <p>{destination.location}</p>
               <div className="info">
@@ -44,6 +66,32 @@ export default function Destinations() {
             </a>
           );
         })}
+      </div>
+      {/* Pagination */}
+      <div className="pagination">
+        <button
+          onClick={goToPreviousPage}
+          disabled={currentPage === 1}
+          className="pagination-button"
+        >
+          Previous
+        </button>
+        {Array.from(Array(Math.ceil(destination.length / itemsPerPage)).keys()).map((pageNumber) => (
+          <button
+            key={pageNumber + 1}
+            onClick={() => handlePageChange(pageNumber + 1)}
+            className={currentPage === pageNumber + 1 ? "active" : ""}
+          >
+            {pageNumber + 1}
+          </button>
+        ))}
+        <button
+          onClick={goToNextPage}
+          disabled={currentPage === Math.ceil(destination.length / itemsPerPage)}
+          className="pagination-button"
+        >
+          Next
+        </button>
       </div>
     </Section>
   );

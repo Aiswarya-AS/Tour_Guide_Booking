@@ -20,44 +20,28 @@ const GNavbar = () => {
                 <div class="profile-header-img">
                     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" />
                 </div>
-                <ul class="profile-header-tab nav nav-tabs nav-tabs-v2">
-                    <li class="nav-item">
-                        <a  class="nav-link" >
-                        <Link to='/guide_home' className='text-decoration-none'> <div class="nav-field"> Dashboard </div></Link>
-                            {/* <div class="nav-value">382</div> */}
-                        </a>
+                
+
+
+
+            <ul class="nav nav-tabs mx-3" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
                     </li>
-                    <li class="nav-item">
-                        <a  class="nav-link active" >
-                        <Link to='/guide_request' className='text-decoration-none'> <div class="nav-field"> Requests </div></Link>
-                            {/* <div class="nav-value">1.3m</div> */}
-                        </a>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
                     </li>
-                    <li class="nav-item">
-                        <a  class="nav-link" >
-                        <Link className='text-decoration-none'> <div class="nav-field"> History</div></Link>
-                            {/* <div class="nav-value">1,397</div> */}
-                        </a>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
                     </li>
-                    <li class="nav-item">
-                        <a  class="nav-link" >
-                        <Link className='text-decoration-none'> <div class="nav-field"> Profile </div></Link>
-                            {/* <div class="nav-value">120</div> */}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link">
-                        <Link className='text-decoration-none'> <div class="nav-field"> Messages</div></Link>
-                            {/* <div class="nav-value">2,592</div> */}
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link">
-                         <div class="nav-field"> <button className='btn btn-outline-danger btn-sm ' onClick={handleLogout}>Logout</button> </div>
-                            {/* <div class="nav-value">2,592</div> */}
-                        </a>
-                    </li>
-                </ul>
+            </ul>
+                <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                </div>
             </div>
         </div>
     </>

@@ -33,7 +33,7 @@ const GLogin = () => {
               })
               Cookies.set("guide_jwt",String(res.data.guide_jwt))
               Cookies.set('guide_id',String(res.data.guide_id))
-              navigate('/guide_home')
+              navigate('/guide')
         }else{
             toast.error('Invalid Email and Password!!',{
                 position:'top-center',
@@ -60,10 +60,10 @@ const GLogin = () => {
                         
                         
                           <div class="form-group">
-                              <input type="text"value={email} onChange={(e)=>setEmail(e.target.value)} name="email" class="form-control mt-3" placeholder="Email Address *" />
+                              <input type="text"value={email} onChange={(e)=>setEmail(e.target.value)} name="email" class="form-control mt-3" placeholder="Email Address *" required />
                           </div>
                           <div class="form-group">
-                              <input type="password" name="txtPhone"value={password} onChange={(e)=>setPassword(e.target.value)} class="form-control mt-3" placeholder="Password *" />
+                              <input type="password" name="txtPhone"value={password} onChange={(e)=>setPassword(e.target.value)} class="form-control mt-3" placeholder="Password *" required />
                           </div>
                           <div class="form-group text-center">
                             <input type="submit" name="btnSubmit" class="btnContact mt-3" value="Login" />

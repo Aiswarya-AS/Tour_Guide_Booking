@@ -4,10 +4,11 @@ import axios from 'axios'
 const GProfile = () => {
   const guide_id=Cookies.get('guide_id')
   const [guide,setGuide]=useState([])
+  const [wallet,setWallet] = useState('')
   useEffect(()=>{
     axios.get(`${'http://127.0.0.1:8000/guide/guide'}/${guide_id}`).then((res)=>{
-      setGuide(res.data)
-      console.log(res.data);
+      setGuide(res.data.serdata)
+      setWallet(res.data.balance)
     })
   },[guide_id])
   return (
@@ -22,6 +23,9 @@ const GProfile = () => {
                     <div class="mb-1"><i class="fa fa-map-marker-alt fa-fw text-muted"></i> {guide.place}</div>
                     {/* <div class="mb-3"><i class="fa fa-link fa-fw text-muted"></i> seantheme.com/studio</div> */}
                     <hr class="mt-4 mb-4" />
+                    <div>
+                      <p>Wallet Balance:{wallet}</p>
+                    </div>
                 </div>
             </div>
     </div>

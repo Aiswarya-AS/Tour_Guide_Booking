@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState  } from 'react'
 import './GSignup.css'
 import axios from 'axios';
 import toast from 'react-hot-toast';
 const GSignup = () => {
+   
   const [first_name,setFirstName]=useState();
   const [last_name,setLastName]=useState();
   const [email,setEmail]=useState();
@@ -28,17 +29,25 @@ const GSignup = () => {
     axios.post('http://localhost:8000/guide/guide_signup/',data,{
         headers:{"Content-Type": "application/json"},
     }).then((res)=>{
+        
         if (res.data.status==='true'){
             toast((t) => (
                 <span>
-                  Please wait from confirmation email from admin to login!!
+                  Please wait for the  confirmation email from admin to login!!
                   &nbsp;  <button className='btn btn-secondary' onClick={() => toast.dismiss(t.id)}>
                            OK
                            
                   </button>
                 </span>
               ));
-              
+             setFirstName('')
+             setEmail('')
+             setLanguage('')
+             setPassword('')
+             setPhone('')
+             setPincode('')
+             setPlace('')
+             setLastName('')
         }else{
             console.log("oopss....");
         }

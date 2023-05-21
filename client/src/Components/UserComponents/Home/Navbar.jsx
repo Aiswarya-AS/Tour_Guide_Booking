@@ -22,11 +22,11 @@ export default function Navbar() {
   return (
 
     <>
-      <Nav className="m-2">
+      <Nav className="m-3 mt-4">
         <div className="brand">
           <div className="container">
             <img src={logo} alt="" />
-            Travelo
+            Voyago
           </div>
           <div className="toggle">
             {navbarState ? (
@@ -39,15 +39,15 @@ export default function Navbar() {
 
         <ul>
           <li>
-            <a href="#home">Home</a>
+           <Link to='/'>Home</Link>
           </li>
           <li>
             <a href="#services">About</a>
           </li>
           <li>
            
-            <Link to="/profile">
-              <a >Profile</a>
+            <Link to="/userprofile">
+              <a href="#" >Profile</a>
               </Link>
           </li>
           <li>

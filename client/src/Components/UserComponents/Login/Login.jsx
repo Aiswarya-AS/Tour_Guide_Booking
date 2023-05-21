@@ -1,18 +1,18 @@
 import toast from 'react-hot-toast';
 import axios from '../../../utilis/axios';
-import React, { useEffect, useState } from 'react'
-import './Login.css'
+import React, { useEffect } from 'react'
+// import './Login.css'
 import Cookies from 'js-cookie'
 import { useNavigate } from "react-router-dom";
 import { loginPost } from '../../../utilis/constants';
 import { Link } from 'react-router-dom';
-// import { loginPost } from '../../../utilis/constants';
+import { useForm } from "react-hook-form";
+
 
 const Login = () => {
-    const [email,setEmail]=useState();
-    const [password,setPassword]=useState();
+    
     const navigate = useNavigate();
-
+    const {register,handleSubmit,formState: { errors }} =useForm();
 
 
     useEffect(()=>{
@@ -24,22 +24,17 @@ const Login = () => {
     },[navigate])
 
     
-    const handleLogin=(e)=>{
-        e.preventDefault();
-        const data=JSON.stringify({
-            email,
-            password
-        });
+    const onSubmit=(data)=>{
+       
         
-        if (email===''||password===''){
-            console.log('Please provide all the fields')
-        }else{
+        
+      
             axios.post(loginPost,data,{headers: { "Content-Type": "application/json" },}).then(
                 (res)=>{
                   
                     
                         if(res.data.status==='true'){
-                            toast.success('Logined successfully!!!',{
+                            toast.success('Logged in successfully!!!',{
                               position:'top-right',
                               style: {
                                 borderRadius: '10px',
@@ -68,59 +63,82 @@ const Login = () => {
                 }
             )
 
-        }
+        
     }
 return (
     <>
-    <div>
+ 
+ {/* <!-- Section: Design Block --> */}
+<section class="">
+  {/* <!-- Jumbotron --> */}
+  <div class="px-4 py-5 px-md-5 text-center text-lg-start" style={{backgroundColor:" hsl(0, 0%, 96%)"}}>
+    <div class="container">
+      <div class="row gx-lg-5 align-items-center">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <h1 class="my-5 display-3 fw-bold ls-tight">
+            Welcome to <br />
+            <span class="text-primary">VOYAGO Login</span>
+          </h1>
+          <p style={{color: "hsl(217, 10%, 50.8%)"}}>
+          Please enter your credentials to log in and access your travel account.
+          </p>
+        </div>
 
-   
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="card">
+            <div class="card-body py-5 px-md-5">
+              <form onSubmit={handleSubmit(onSubmit)}>
+              <h3 className='text-center mb-2'>Welcome Back</h3>
+
+                {/* <!-- Email input --> */}
+                <div class="form-outline mb-4 mt-5">
+                  <label class="form-label" for="form3Example3">Email address</label>
+                  <input type="email" id="form3Example3" name="email"   {...register("email", {
+                                            required: "Email is required",
+                                            pattern: {
+                                              value: /\S+@\S+\.\S+/,
+                                              message: "Invalid email format"
+                                            }
+                                          })} class="form-control" placeholder='Email Address' />
+                                          {errors.email && <p className='text-danger  pt-1 px-2  'style={{fontSize:".8rem"}}>{errors.email.message}</p>}
+                </div>
+
+                {/* <!-- Password input --> */}
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4">Password</label>
+                  <input type="password" id="form3Example4" class="form-control" name="password"  {...register('password',{
+        required:"Password is required"
+      })} placeholder='Password' />
+      {errors.password && <p className='text-danger  pt-1 px-2  'style={{fontSize:".8rem"}}>{errors.password.message}</p>}
+                </div>
+
+                
+
+                {/* <!-- Submit button --> */}
+                <div className='text-center'>
+                <button type="submit" class="btn btn-primary btn-block mb-4 ">
+                  Login
+                </button>
+                </div>
+                
+
+                {/* <!-- Register buttons --> */}
+                <div class="text-center">
+                  <p>Don't Have an Account? <Link to='/signup'>Sign Up</Link> </p>
+                  
+                </div>
+                {/* Link to Regsiter */}
+                
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    {/* <form onSubmit={handleLogin}>
-    <input type="text" name='email' value={email} onChange={(e)=>{setEmail(e.target.value)}} placeholder='Email' /><br/>
-    <input type="password" name='password' value={password} onChange={(e)=>{setPassword(e.target.value)}} placeholder='Password' /><br/>
-    <button type='submit'>Login</button>
-    </form> */}
-    <div className='login-page'>
-    <form onSubmit={handleLogin}  id="login-form" className="login-form"  >
-  <h1 className="a11y-hidden">Login Form</h1>
-  <div>
-    <label className="label-email">
-      <input type="email" className="text" name="email" value={email} onChange={(e)=>{setEmail(e.target.value)}} placeholder="Email" tabIndex="1" required />
-      <span className="required">Email</span>
-    </label>
   </div>
-  <input type="checkbox" name="show-password"  className="show-password a11y-hidden" id="show-password" tabIndex="3" />
-  <label className="label-show-password" htmlFor="show-password">
-    <span>Show Password</span>
-  </label>
-  <div>
-    <label className="label-password">
-      <input type="text" className="text" name="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password" tabIndex="2" required />
-      <span className="required">Password</span>
-    </label>
-  </div>
-  {/* <input type="submit" value="Log In" /> */}
-  <input type='submit' value='Log In'/>
-  <div className="email">
-    
-    <Link to='/signup'>Register</Link>
-  </div>
-  {/* <figure aria-hidden="true" className='text-center'>
-    <div className="person-body"></div>
-    <div className="neck skin"></div>
-    <div className="head skin">
-      <div className="eyes"></div>
-      <div className="mouth"></div>
-    </div>
-    <div className="hair"></div>
-    <div className="ears"></div>
-    <div className="shirt-1"></div>
-    <div className="shirt-2"></div>
-  </figure> */}
-  <h2 className='text-center'>Login</h2>
-</form>
-</div>
+  {/* <!-- Jumbotron --> */}
+</section>
+{/* <!-- Section: Design Block --> */}
     </>
 )
 }

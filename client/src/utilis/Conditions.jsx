@@ -26,3 +26,19 @@ export const RequireLoginGuide=()=>{
     
     
 };
+
+export  function AuthorizeUser({children}){
+    const token = Cookies.get("jwt");
+
+    if(!token) return <Navigate to={'/login'}/>
+
+    return children
+}
+
+export  function AuthorizeGuide({children}){
+    const token = Cookies.get("guide_jwt");
+
+    if(!token) return <Navigate to={'/guide_login'}/>
+
+    return children
+}

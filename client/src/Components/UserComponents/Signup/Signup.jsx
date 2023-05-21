@@ -1,116 +1,260 @@
-
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from '../../../utilis/axios';
-import { signupPost } from '../../../utilis/constants';
-import { Link } from 'react-router-dom';
-const Signup = () => {
-    const [firstname,setFirstname]=useState();
-    const [lastname,setLastname]=useState();
-    const [username,setUsername]=useState();
-    const [phone,setPhone]=useState();
-    const [email,setEmail]=useState();
-    const [password,setPassword]=useState();
-    const navigate = useNavigate();
-    const handleSignup=(e)=>{
-        e.preventDefault();
-        const data=JSON.stringify({
-            firstname,
-            lastname,
-            email,
-            phone,
-            username,
-            password
-        })
-        axios.post(signupPost,data,{
-            headers:{"Content-Type": "application/json"},
-        }).then((res)=>{
-            if(res.status==='true'){
-                console.log('singup ayada kuttaa...');
-                navigate('/login')
-            }else{
-                console.log('Illa mwonuee ni valarinittaa')
-            }
-        })
+import axios from "../../../utilis/axios";
+import { signupPost } from "../../../utilis/constants";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 
-    }
+const Signup = () => {
+  const {register,handleSubmit,formState: { errors },watch} = useForm();
+
+  const navigate = useNavigate();
+  const handleSignup = (data) => {
+    console.log(data);
+    axios
+      .post(signupPost, data, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        if (res.data.status === "true") {
+          console.log("singup ayada kuttaa...");
+          navigate("/login");
+        } else {
+          console.log("Illa mwonuee ni valarinittaa");
+          toast.error(res.data.status)
+        }
+      });
+  };
+  const validatePasswordMatch = (value) => {
+    const { password, confirmPassword } = watch(["password", "confirmPassword"]);
+    return password === confirmPassword || "Passwords must match";
+  };
   return (
     <>
-    <div className='login-page'>
-    <form onSubmit={handleSignup}  id="login-form" className="login-form"  >
-  <div>
-    <div className='title'>
+      <section class="">
+        {/* <!-- Jumbotron --> */}
+        <div
+          class="px-4 py-5 px-md-5 text-center text-lg-start"
+          style={{ backgroundColor: " hsl(0, 0%, 96%)" }}
+        >
+          <div class="container">
+            <div class="row gx-lg-5 align-items-center">
+              <div class="col-lg-6 mb-5 mb-lg-0">
+                <h1 class="my-5 display-3 fw-bold ls-tight">
+                  The best offer <br />
+                  <span class="text-primary">for your business</span>
+                </h1>
+                <p style={{ color: "hsl(217, 10%, 50.8%)" }}>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Eveniet, itaque accusantium odio, soluta, corrupti aliquam
+                  quibusdam tempora at cupiditate quis eum maiores libero
+                  veritatis? Dicta facilis sint aliquid ipsum atque?
+                </p>
+              </div>
 
-  <h1 >Signup </h1>
-    </div>
-    <label className="label-email">
-      <input type="text" className="text" name="email"value={firstname} onChange={(e)=>{setFirstname(e.target.value)}} placeholder="FirstName" tabIndex="1" required />
-      <span className="required">FirstName</span>
-    </label>
-  </div>
+              <div class="col-lg-6 mb-5 mb-lg-0">
+                <h3 className="text-center ">Create account</h3>
+                <div class="card">
+                  <div class="card-body py-5 px-md-5">
+                    <form onSubmit={handleSubmit(handleSignup)}>
+                      {/* <!-- 2 column grid layout with text inputs for the first and last names --> */}
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <label class="form-label" for="form3Example1">
+                              First name
+                            </label>
+                            <input
+                              type="text"
+                              name="email"
+                              {...register("firstname", {
+                                required: "First Name is required",
 
-  <div>
-    <label className="label-email">
-      <input type="text" className="text" name="email"value={lastname} onChange={(e)=>{setLastname(e.target.value)}} placeholder="LastName" tabIndex="1" required />
-      <span className="required">LastName</span>
-    </label>
-  </div>
+                                pattern: {
+                                  value: /^[a-zA-Z]+$/,
+                                  message:
+                                    "Invalid name. Only alphabets are allowed.",
+                                },
+                              })}
+                              id="form3Example1"
+                              class="form-control"
+                            />
+                            {errors.firstname && (
+                              <p
+                                className="text-danger  pt-1 px-1  "
+                                style={{ fontSize: ".7rem" }}
+                              >
+                                {errors.firstname.message}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <label class="form-label" for="form3Example2">
+                              Last name
+                            </label>
+                            <input
+                              type="text"
+                              {...register("lastname", {
+                                required: "Last Name is required",
+
+                                pattern: {
+                                  value: /^[a-zA-Z]+$/,
+                                  message:
+                                    "Invalid name. Only alphabets are allowed.",
+                                },
+                              })}
+                              class="form-control"
+                            />
+                            {errors.lastname && (
+                              <p
+                                className="text-danger  pt-1 px-1  "
+                                style={{ fontSize: ".7rem" }}
+                              >
+                                {errors.lastname.message}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* <!-- Email input --> */}
+                      <div class="form-outline mb-4">
+                        <label class="form-label" for="form3Example3">
+                          Email address
+                        </label>
+                        <input
+                          type="email"
+                          {...register("email", {
+                            required: "Email is required",
+                            pattern: {
+                              value: /\S+@\S+\.\S+/,
+                              message: "Invalid email format",
+                            },
+                          })}
+                          class="form-control"
+                        />
+                        {errors.email && (
+                          <p
+                            className="text-danger  pt-1 px-1  "
+                            style={{ fontSize: ".7rem" }}
+                          >
+                            {errors.email.message}
+                          </p>
+                        )}
+                      </div>
 
 
-  <div>
-    <label className="label-email">
-      <input type="text" className="text" name="email"value={username} onChange={(e)=>{setUsername(e.target.value)}} placeholder="UserName" tabIndex="1" required />
-      <span className="required">UserName</span>
-    </label>
-  </div>
+
+                      <div class="form-outline mb-4">
+                        <label class="form-label" for="form3Example4">
+                          Phone
+                        </label>
+                        <input
+                          type="text"
+                          {...register("phone", {
+                            required: "Phone number is required",
+
+                            pattern: {
+                              value: /^\+(?:[0-9] ?){6,14}[0-9]$/,
+                              message:
+                                "Invalid phone format.Should only contain numbers. ",
+                            },
+                          })}
+                          class="form-control"
+                        />
+                        {errors.phone && (
+                          <p
+                            className="text-danger  pt-1 px-1  "
+                            style={{ fontSize: ".7rem" }}
+                          >
+                            {errors.phone.message}
+                          </p>
+                        )}
+                      </div>
 
 
-  <div>
-    <label className="label-email">
-      <input type="email" className="text" name="email"value={email} onChange={(e)=>{setEmail(e.target.value)}} placeholder="Email" tabIndex="1" required />
-      <span className="required">Email</span>
-    </label>
-  </div>
 
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <label class="form-label" for="form3Example2">
+                              Password
+                            </label>
+                            <input
+                              type="text"
+                              
+                              {...register("password", {
+                                required: "Password is required",
+                              })}
+                              class="form-control"
+                            />
+                            {errors.password && (
+                              <p
+                                className="text-danger  pt-1 px-1  "
+                                style={{ fontSize: ".7rem" }}
+                              >
+                                {errors.password.message}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                          <div class="form-outline">
+                            <label class="form-label" for="form3Example2">
+                              Confirm Password
+                            </label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              {...register("confirmPassword", {
+                                required: "Password is required",
+                                validate: validatePasswordMatch
+                              })}
+                            />
+                            {errors.confirmPassword && (
+                              <p
+                                className="text-danger  pt-1 px-1  "
+                                style={{ fontSize: ".7rem" }}
+                              >
+                                {errors.confirmPassword.message}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
 
-  <div>
-    <label className="label-email">
-      <input type="number" className="text" name="email"value={phone} onChange={(e)=>{setPhone(e.target.value)}} placeholder="Email" tabIndex="1" required />
-      <span className="required">Phone</span>
-    </label>
-  </div>
-  {/* <input type="checkbox" name="show-password"  className="show-password a11y-hidden" id="show-password" tabIndex="3" />
-  <label className="label-show-password" htmlFor="show-password">
-    <span>Show Password</span>
-  </label> */}
-  <div>
-    <label className="label-password">
-      <input type="text" className="text" name="password" value={password} onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password" tabIndex="2" required />
-      <span className="required">Password</span>
-    </label>
-  </div>
-  {/* <input type="submit" value="Log In" /> */}
-  <input type='submit' value='Log In'/>
-  <div className="email">
-    
-    <Link to='/login'>Login</Link>
-  </div>
-  {/* <figure aria-hidden="true">
-    <div className="person-body"></div>
-    <div className="neck skin"></div>
-    <div className="head skin">
-      <div className="eyes"></div>
-      <div className="mouth"></div>
-    </div>
-    <div className="hair"></div>
-    <div className="ears"></div>
-    <div className="shirt-1"></div>
-    <div className="shirt-2"></div>
-  </figure> */}
-</form>
-</div>
+                      {/* <!-- Submit button --> */}
+                      <div className="text-center">
+                        <button
+                          type="submit"
+                          class="btn btn-primary btn-block mb-4 "
+                        >
+                          Sign up
+                        </button>
+                      </div>
+
+                      {/* <!-- Register buttons --> */}
+                      <div class="text-center">
+                        <p>
+                          Already Have Account?<Link to="/login">Login</Link>
+                        </p>
+                      </div>
+                      {/* Link to Regsiter */}
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <!-- Jumbotron --> */}
+      </section>
+      {/* <!-- Section: Design Block --> */}
     </>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;
