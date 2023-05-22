@@ -45,9 +45,9 @@ function App() {
           <Route
             path="/"
             element={
-              <AuthorizeUser>
+             
                 <HomePage />
-              </AuthorizeUser>
+              
             }
           />
 
@@ -55,9 +55,9 @@ function App() {
             <Route
               path="/destinations"
               element={
-                <AuthorizeUser>
+                
                   <DestinationPage />
-                </AuthorizeUser>
+                
               }
             ></Route>
             <Route
@@ -67,9 +67,9 @@ function App() {
             <Route
               path="/guide/:id"
               element={
-                <AuthorizeUser>
+                
                   <GuideDetailPage />
-                </AuthorizeUser>
+                
               }
             ></Route>
             {/* Profile */}
@@ -77,49 +77,49 @@ function App() {
             <Route
               path="/profileUpdate"
               element={
-                <AuthorizeUser>
+                
                   <ProfileUpdatePage />
-                </AuthorizeUser>
+                
               }
             ></Route>
             <Route
               path="/requests"
               element={
-                <AuthorizeUser>
+                
                   <UserRequestPage />
-                </AuthorizeUser>
+                
               }
             />
             <Route
               path="/checkout/:id"
               element={
-                <AuthorizeUser>
+                
                   <Checkout />
-                </AuthorizeUser>
+                
               }
             />
             <Route
               path="/history"
               element={
-                <AuthorizeUser>
+                
                   <BookingHistoryPage />
-                </AuthorizeUser>
+                
               }
             />
             <Route
               path="/confirmation"
               element={
-                <AuthorizeUser>
+                
                   <OrderConfirmation />
-                </AuthorizeUser>
+                
               }
             />
             <Route
               path="/userprofile"
               element={
-                <AuthorizeUser>
+                
                   <UserProfile />
-                </AuthorizeUser>
+                
               }
             ></Route>
           </Route>
@@ -129,7 +129,7 @@ function App() {
           <Route path="/guide_signup" element={<GSignupPage />} />
           <Route path="/guide_login" element={<GLogin />} />
 
-          <Route element={<RequireLoginGuide />}>
+          {/* <Route element={<RequireLoginGuide />}> */}
             {/* <Route path='/guide_home' element={<GHomePage/>}/> */}
             <Route
               path="/guide_request"
@@ -163,7 +163,7 @@ function App() {
                 </AuthorizeGuide>
               }
             />
-          </Route>
+          {/* </Route> */}
         </Routes>
       </Router>
     </div>

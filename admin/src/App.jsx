@@ -5,7 +5,7 @@ import Navbar from "./components/Home/Navbar";
 import { Toaster } from "react-hot-toast";
 import AddDestination from "./components/Destination/AddDestination";
 import EditDestination from "./components/Destination/EditDestination";
-import { AuthorizeAdmin, RequireLoginAdmin } from "./utilis/protected";
+import { AuthorizeAdmin, ProtectAdmin } from "./utilis/protected";
 
 // import CreateDestination from './components/Destination/CreateDestination';
 
@@ -17,8 +17,11 @@ function App() {
       </div>
       <Router>
         <Routes>
+          {/* <ProtectAdmin> */}
+
           <Route path="/" element={<Login />}></Route>
-          <Route element={<RequireLoginAdmin/>}>
+          {/* </ProtectAdmin> */}
+          {/* <Route element={<RequireLoginAdmin/>}> */}
             <Route
               path="/admin_home"
               element={
@@ -43,7 +46,7 @@ function App() {
                 </AuthorizeAdmin>
               }
             ></Route>
-          </Route>
+          {/* </Route> */}
         </Routes>
       </Router>
     </>

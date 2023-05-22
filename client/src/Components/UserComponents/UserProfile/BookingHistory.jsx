@@ -4,7 +4,6 @@ import Accordion from "react-bootstrap/Accordion";
 import "./BookingHistory.css";
 import {
   bookingHistoryGet,
-  cancelBooking,
   cancelBookingPost,
   endJourney,
 } from "../../../utilis/constants";

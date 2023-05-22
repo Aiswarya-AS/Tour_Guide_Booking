@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { dashboard } from '../../utilis/constants';
 import axios from '../../utilis/axios'
 import UserGuideChart from '../Charts/UserGuideChart';
-import MostSelectedGuideChart from '../Charts/MostSelectedGuideChart';
+
 import SalesChart from '../Charts/SalesChart';
 const Dashboard = () => {
   const [data,setData] = useState({})
